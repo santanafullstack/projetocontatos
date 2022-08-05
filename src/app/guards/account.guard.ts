@@ -6,7 +6,7 @@ import { Router } from "@angular/router";
 @Injectable({
     providedIn: 'root'
 })
-export class ContatosGuard implements CanActivate {
+export class AccountGuard implements CanActivate {
  
     constructor(
         private authHelper: AuthHelper,
@@ -16,15 +16,15 @@ export class ContatosGuard implements CanActivate {
     }
  
     canActivate() {
-        //verificar se o usuário está autenticado
+        //verificar se o usuário está autenticado. Se sim,
+        //o usuário é redirecionado para a página de consulta de contatos
         var auth = this.authHelper.getAuthData();
         if (auth != null) {
-            return true; //sucesso!
+            this.router.navigate(['/contatos-consulta']);
+            return false;
         }
         else {
-            //redirecionar para a página de login
-            this.router.navigate(['/acessar-conta']);
-            return false;
+            return true;
         }
     }
 }
